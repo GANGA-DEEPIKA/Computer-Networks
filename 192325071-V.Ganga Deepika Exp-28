@@ -1,0 +1,19 @@
+import java.net.*;
+
+public class DNSClient {
+    public static void main(String[] args) {
+        if (args.length != 1) {
+            System.out.println("Usage: java DNSClient <hostname>");
+            return;
+        }
+
+        String hostname = args[0];
+
+        try {
+            InetAddress address = InetAddress.getByName(hostname);
+            System.out.println("Resolved IP address: " + address.getHostAddress());
+        } catch (UnknownHostException e) {
+            System.out.println("Unable to resolve hostname: " + hostname);
+        }
+    }
+}
