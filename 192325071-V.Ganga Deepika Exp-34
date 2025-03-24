@@ -1,0 +1,33 @@
+#include <stdio.h>
+#include <string.h>
+
+void xorDivision(char *dividend, const char *divisor, int divisorLen) {
+    for (int i = 0; i < divisorLen; i++) {
+        dividend[i] = (dividend[i] == divisor[i]) ? '0' : '1';
+    }
+}
+
+void crcEncode(char *data, const char *key) {
+    int dataLen = strlen(data), keyLen = strlen(key);
+    char appendedData[100] = "";
+    strcpy(appendedData, data);
+    
+    for (int i = 0; i < keyLen - 1; i++) strcat(appendedData, "0");
+
+    for (int i = 0; i <= dataLen; i++) {
+        if (appendedData[i] == '1') xorDivision(&appendedData[i], key, keyLen);
+    }
+    
+    printf("Transmitted Data: %s\n", data);
+    printf("CRC Remainder: %s\n", &appendedData[dataLen]);
+}
+
+int main() {
+    char data[50], key[20];
+    printf("Enter data: ");
+    scanf("%s", data);
+    printf("Enter key: ");
+    scanf("%s", key);
+    crcEncode(data, key);
+    return 0;
+}
