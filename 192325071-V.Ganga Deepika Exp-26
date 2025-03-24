@@ -1,0 +1,27 @@
+import java.io.*;
+import java.net.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class DateTimeServer {
+    public static void main(String[] args) {
+        int port = 12345;  // Define the port number
+
+        try (ServerSocket serverSocket = new ServerSocket(port)) {
+            System.out.println("Server is running on port " + port);
+
+            while (true) {
+                Socket socket = serverSocket.accept();
+                System.out.println("Client connected: " + socket.getInetAddress());
+
+                PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+                String dateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+                out.println("Current Date and Time: " + dateTime);
+
+                socket.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
